@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                     continueButton.setVisibility(view.VISIBLE);
                     Toast.makeText(getApplicationContext(),"Invalid Number: "+number,Toast.LENGTH_LONG).show();
                 }else{
-                    intent = new Intent(getApplicationContext(),OtpActivity.class);
+                    intent = new Intent(getApplicationContext(),OtpScreen.class);
                     intent.putExtra("PhoneNumber", phoneNumber.getText().toString());
                     startActivity(intent);
                 }
