@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 progressBar.setVisibility(view.VISIBLE);
+
                 continueButton.setVisibility(view.INVISIBLE);
                 String number = phoneNumber.getText().toString();
                 if(number.length()!=10){
