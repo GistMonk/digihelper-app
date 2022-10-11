@@ -49,6 +49,13 @@ public class MainActivity extends AppCompatActivity {
                     intent = new Intent(getApplicationContext(),OtpActivity.class);
                     intent.putExtra("PhoneNumber", phoneNumber.getText().toString());
                     startActivity(intent);
+
+
+                    //TODO below line May Change Later when connect to backend
+                    phoneNumber.setText("");
+                    progressBar.setVisibility(view.INVISIBLE);
+                    continueButton.setVisibility(view.VISIBLE);
+
                 }
             }
         });

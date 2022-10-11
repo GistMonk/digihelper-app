@@ -3,10 +3,7 @@ package com.example.digihelper;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +13,7 @@ public class OtpActivity extends AppCompatActivity {
 
     EditText optText;
     AppCompatButton verifyBtn;
+    TextView phoneNumText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,19 +22,25 @@ public class OtpActivity extends AppCompatActivity {
 
         verifyBtn = (AppCompatButton) findViewById(R.id.verifyButton);
 
-        verifyBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                optText = (EditText) findViewById(R.id.otpTextField);
-                String otpTextString = optText.getText().toString();
-                Toast.makeText(getApplicationContext(), "otp is "+otpTextString,Toast.LENGTH_LONG).show();
-                String value;
-                Bundle bundle = getIntent().getExtras();
-                if (bundle != null) {
-                    value = bundle.getString("sample_name");
-                }
+        String newString;
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                newString= null;
+            } else {
+                newString= extras.getString("PhoneNumber");
             }
+        } else {
+            newString= (String) savedInstanceState.getSerializable("PhoneNumber");
+        }
 
+        phoneNumText = (TextView) findViewById(R.id.phoneNumText);
+        phoneNumText.setText(newString);
+
+        verifyBtn.setOnClickListener(view -> {
+            optText = (EditText) findViewById(R.id.otpTextField);
+            String otpTextString = optText.getText().toString();
+            Toast.makeText(getApplicationContext(), "otp is "+otpTextString,Toast.LENGTH_LONG).show();
         });
 
     }
