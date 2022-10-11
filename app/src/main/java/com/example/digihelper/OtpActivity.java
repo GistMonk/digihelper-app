@@ -30,7 +30,13 @@ public class OtpActivity extends AppCompatActivity {
                 optText = (EditText) findViewById(R.id.otpTextField);
                 String otpTextString = optText.getText().toString();
                 Toast.makeText(getApplicationContext(), "otp is "+otpTextString,Toast.LENGTH_LONG).show();
+                String value;
+                Bundle bundle = getIntent().getExtras();
+                if (bundle != null) {
+                    value = bundle.getString("sample_name");
+                }
             }
+
         });
 
     }

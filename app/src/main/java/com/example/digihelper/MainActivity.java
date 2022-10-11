@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-        if (getSupportActionBar() != null) {
+        if (getSupportActionBar() != null) {;
             getSupportActionBar().hide();
         }
 
@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         continueButton = (AppCompatButton) findViewById(R.id.continueButton);
         progressBar = (ProgressBar) findViewById(R.id.loader);
 
+        System.out.println(phoneNumber);
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

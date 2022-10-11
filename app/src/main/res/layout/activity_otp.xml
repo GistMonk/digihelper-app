@@ -14,7 +14,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/otp"
-
+        android:layout_marginTop="-11dp"
         />
 
     <TextView
@@ -84,9 +84,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
         android:ems="10"
+        android:hint="6-Digit OTP"
         android:inputType="number"
         android:textSize="30dp"
-
+        android:textAlignment="center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView2"
