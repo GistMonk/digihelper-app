@@ -7,28 +7,28 @@
     tools:context=".OtpActivity">
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/otpScreenImage"
         android:layout_width="0dp"
         android:layout_height="352dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/otp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/otp"
         />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/otpHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:text="ONE TIME PASSWORD"
         android:textColor="@color/black"
-        android:textSize="25dp"
+        android:textSize="20sp"
         android:textStyle="bold"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:layout_constraintTop_toBottomOf="@+id/otpScreenImage"
         />
 
 
@@ -40,13 +40,10 @@
         android:layout_marginStart="60dp"
         android:layout_marginTop="20dp"
         android:text="Verification Code sent to 91+"
-
-
         android:textColor="@color/black"
-        android:textSize="16dp"
-
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView1" />
+        app:layout_constraintTop_toBottomOf="@id/otpHeading" />
 
     <TextView
         android:id="@+id/phoneNumText"
@@ -56,20 +53,20 @@
         android:layout_marginTop="20dp"
         android:text="6377084389"
         android:textColor="@color/black"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/veriText"
-        app:layout_constraintTop_toBottomOf="@id/textView1" />
+        app:layout_constraintTop_toBottomOf="@id/otpHeading" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/changePhoneNumberClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="10dp"
         android:layout_marginTop="8dp"
         android:text="Change Phone Number"
         android:textColor="@color/purple_200"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,22 +77,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
-        android:ems="10"
         android:hint="6-Digit OTP"
         android:inputType="number"
-        android:textSize="30dp"
+        android:textSize="30sp"
+        android:maxLength="6"
         android:textAlignment="center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView2"
+        app:layout_constraintTop_toBottomOf="@id/changePhoneNumberClick"
          />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/resendClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Resend Authorisation Code "
-        android:textSize="16dp"
+        android:text="Resend Authorisation Code"
+        android:textSize="16sp"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/otpTextField"
@@ -111,11 +108,11 @@
         android:textColor="@color/white"
         android:onClick="displayMsg"
         android:text="Verify Now"
-        android:textSize="18dp"
-        android:layout_marginVertical="10dp"
+        android:textSize="18sp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:ignore="OnClick" />
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
