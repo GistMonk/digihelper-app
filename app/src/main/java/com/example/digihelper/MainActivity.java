@@ -33,12 +33,10 @@ public class MainActivity extends AppCompatActivity {
         continueButton = (AppCompatButton) findViewById(R.id.continueButton);
         progressBar = (ProgressBar) findViewById(R.id.loader);
 
-        System.out.println(phoneNumber);
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 progressBar.setVisibility(view.VISIBLE);
-
                 continueButton.setVisibility(view.INVISIBLE);
                 String number = phoneNumber.getText().toString();
                 if(number.length()!=10){

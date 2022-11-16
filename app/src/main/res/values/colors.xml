@@ -7,4 +7,14 @@
     <color name="teal_700">#4A4A4A</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+
+<!--    My colors-->
+    <color name="background">#121b22</color>
+    <color name="cards_background">#1f2c34</color>
+    <color name="head_text">#ebf0f4</color>
+    <color name="all_text">#ebf2f5</color>
+    <color name="sub_text">#8c9da5</color>
+    <color name="buttons_color">#22a185</color>
+
 </resources>

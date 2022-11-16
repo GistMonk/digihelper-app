@@ -106,7 +106,6 @@
         android:paddingVertical="10dp"
         android:background="@drawable/rounded_corner"
         android:textColor="@color/white"
-        android:onClick="displayMsg"
         android:text="Verify Now"
         android:textSize="18sp"
         android:layout_marginBottom="10dp"
@@ -114,5 +113,16 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         />
+
+    <ProgressBar
+        android:id="@+id/otpLoader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:translationZ="3dp"
+        app:layout_constraintTop_toTopOf="@id/verifyButton"
+        app:layout_constraintBottom_toBottomOf="@id/verifyButton"
+        app:layout_constraintLeft_toLeftOf="@id/verifyButton"
+        app:layout_constraintRight_toRightOf="@id/verifyButton"
+        android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
