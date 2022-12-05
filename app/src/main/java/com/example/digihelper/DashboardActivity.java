@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -21,17 +22,29 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
     double currentSpeed ;
     double prevSpeed;
 
+    MediaPlayer mediaPlayerAlert;
+    MediaPlayer meadiaPlayerMonitor;
+    MediaPlayer mediaPlayerSpeedAlert;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_dashboard);
         speedText = findViewById(R.id.speed);
         speedText.setText("0.0m/s");
+        currentSpeed = 0;
+        prevSpeed =0;
 
 
+        mediaPlayerAlert = MediaPlayer.create(getApplicationContext(), R.raw.alert);
+        meadiaPlayerMonitor = MediaPlayer.create(getApplicationContext(), R.raw.start);
+        mediaPlayerSpeedAlert = MediaPlayer.create(getApplicationContext(),R.raw.speed);
+
+        meadiaPlayerMonitor.start();
 
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -78,8 +91,16 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
             speedText.setText(mCurrentSpeed+"m/s");
 
 
+            // play sound on over speeding
+            if(currentSpeed > 1){
+                mediaPlayerSpeedAlert.start();
+            }
+
+
             if(currentSpeed == 0.0 && prevSpeed > 1){
                 // crash detected //
+                mediaPlayerAlert.start();
+
             }
 
         }
