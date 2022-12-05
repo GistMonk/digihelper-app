@@ -1,5 +1,4 @@
 package com.example.digihelper;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -18,6 +17,10 @@ import java.util.List;
 public class DashboardActivity extends AppCompatActivity implements LocationListener {
 
     TextView speedText ;
+
+    double currentSpeed ;
+    double prevSpeed;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,7 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
         }
                 Log.i("permission","You  have permission of location");
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0, this);
 
 
 
@@ -61,12 +64,23 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
             Log.i("speed","Current Speed : [location null] 0.0m/s");
             speedText.setText("0.0m/s");
 
+
+
         }else{
             float mCurrentSpeed = location.getSpeed();
+            prevSpeed = currentSpeed;
+            currentSpeed =mCurrentSpeed;
+
             speed  = mCurrentSpeed;
+
+
             Log.i("speed","Current Speed : [location] " + mCurrentSpeed+ "m/s");
             speedText.setText(mCurrentSpeed+"m/s");
 
+
+            if(currentSpeed == 0.0 && prevSpeed > 1){
+                // crash detected //
+            }
 
         }
 
