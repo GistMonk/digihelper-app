@@ -11,6 +11,7 @@ import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -18,6 +19,9 @@ import java.util.List;
 public class DashboardActivity extends AppCompatActivity implements LocationListener {
 
     TextView speedText ;
+    TextView speedKmText;
+    TextView crashText;
+    ImageView crashImage;
 
     double currentSpeed ;
     double prevSpeed;
@@ -34,11 +38,14 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_dashboard);
-        speedText = findViewById(R.id.speed);
-        speedText.setText("0.0m/s");
+        speedText = findViewById(R.id.speedText);
         currentSpeed = 0;
         prevSpeed =0;
-
+        speedKmText = findViewById(R.id.speedKmText);
+        crashImage = findViewById(R.id.crashImage);
+        crashText = findViewById(R.id.crashText);
+        speedText.setText("0.0m/s");
+        speedKmText.setText("0.0km/h");
 
         mediaPlayerAlert = MediaPlayer.create(getApplicationContext(), R.raw.alert);
         meadiaPlayerMonitor = MediaPlayer.create(getApplicationContext(), R.raw.start);
@@ -76,7 +83,7 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
         if(location == null){
             Log.i("speed","Current Speed : [location null] 0.0m/s");
             speedText.setText("0.0m/s");
-
+            speedKmText.setText("0.0km/h");
 
 
         }else{
@@ -90,6 +97,8 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
             Log.i("speed","Current Speed : [location] " + mCurrentSpeed+ "m/s");
             speedText.setText(mCurrentSpeed+"m/s");
 
+            float kmCurrentSpeed = (float) (mCurrentSpeed*3.6);
+            speedKmText.setText((int) kmCurrentSpeed);
 
             // play sound on over speeding
             if(currentSpeed > 1){
@@ -98,7 +107,8 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
 
 
             if(currentSpeed == 0.0 && prevSpeed > 1){
-                // crash detected //
+                crashText.setText("Crash Detected");
+                crashImage.setBackground(getDrawable(R.drawable.cragradient));
                 mediaPlayerAlert.start();
 
             }
