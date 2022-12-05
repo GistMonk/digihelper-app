@@ -136,10 +136,10 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
                 String hexColor = String.format("#%06X", (0xFFFFFF & color));
 
                 if (hexColor.equals("#FFFFFF")) {
-                    Toast.makeText(getApplicationContext(), "color is : " + hexColor, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(), "color is : " + hexColor, Toast.LENGTH_LONG).show();
                     speedText.setTextColor(Color.parseColor("#FF0000"));
                 } else {
-                    Toast.makeText(getApplicationContext(), "color is : " + hexColor, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(), "color is : " + hexColor, Toast.LENGTH_LONG).show();
                     speedText.setTextColor(Color.parseColor("#FFFFFF"));
                 }
 
