@@ -5,6 +5,7 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -56,6 +57,23 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
         speedText.setText("0.0m/s");
         speedKmText.setText("0.0km/h");
 
+
+//        int color=speedText.getCurrentTextColor();
+//        String hexColor = String.format("#%06X", (0xFFFFFF & color));
+//        if(hexColor.equals("#FFFFFF")){
+//            Toast.makeText(getApplicationContext(), "color is : " + hexColor, Toast.LENGTH_LONG).show();
+//        }
+//        int color=speedText.getCurrentTextColor();
+//        String hexColor = String.format("#%06X", (0xFFFFFF & color));
+//
+//        if (hexColor.equals("#FFFFFF")) {
+//            Toast.makeText(getApplicationContext(), "color is : " + hexColor, Toast.LENGTH_LONG).show();
+//            speedText.setTextColor(Color.parseColor("#FF0000"));
+//        } else {
+//            Toast.makeText(getApplicationContext(), "color is : " + hexColor, Toast.LENGTH_LONG).show();
+//            speedText.setTextColor(Color.parseColor("#FFFFFF"));
+//        }
+
         mediaPlayerAlert = MediaPlayer.create(getApplicationContext(), R.raw.alert);
         meadiaPlayerMonitor = MediaPlayer.create(getApplicationContext(), R.raw.start);
         mediaPlayerSpeedAlert = MediaPlayer.create(getApplicationContext(),R.raw.speed);
@@ -94,8 +112,6 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
             Log.i("speed","Current Speed : [location null] 0.0m/s");
             speedText.setText("0.0m/s");
             speedKmText.setText("0.0km/h");
-
-
         }else{
             float mCurrentSpeed = location.getSpeed();
             prevSpeed = currentSpeed;
@@ -111,6 +127,17 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
 
             // play sound on over speeding
             if(currentSpeed > 1){
+                int color=speedText.getCurrentTextColor();
+                String hexColor = String.format("#%06X", (0xFFFFFF & color));
+
+                if (hexColor.equals("#FFFFFF")) {
+                    Toast.makeText(getApplicationContext(), "color is : " + hexColor, Toast.LENGTH_LONG).show();
+                    speedText.setTextColor(Color.parseColor("#FF0000"));
+                } else {
+                    Toast.makeText(getApplicationContext(), "color is : " + hexColor, Toast.LENGTH_LONG).show();
+                    speedText.setTextColor(Color.parseColor("#FFFFFF"));
+                }
+
                 mediaPlayerSpeedAlert.start();
             }
 
