@@ -110,6 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:id="@+id/speed"
             android:text="140 Kmph"
             android:textColor="@color/white"
             android:textSize="20dp"
@@ -130,9 +131,11 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
+            android:id="@+id/locationImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
+
             android:src="@drawable/lgradient" />
 
         <TextView
