@@ -1,8 +1,10 @@
 package com.example.digihelper;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.core.app.ActivityCompat;
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -10,33 +12,66 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class DashboardActivity extends AppCompatActivity implements LocationListener {
 
-    TextView speedText ;
+    // Text view variables //
+
+    TextView timeText;
+    TextView speedText;
     TextView speedKmText;
     TextView crashText;
+    TextView latLongText;
+    TextView altitudeText;
     TextView baMeasureText;
+    TextView realtimeUncertainText;
+
+    // crash image view
+
     ImageView crashImage;
+
+    // values variable declarations
 
     double currentSpeed ;
     double prevSpeed;
     double speedMinStamp;
     double speedMaxStamp;
     double timeDiff;
+    long time;
+    double latitude;
+    double longitude;
+    double altitude;
+    double bearingAccuracy;
+    double realtimeUncertainty;
 
-
+    //  Crash detected sound
     MediaPlayer mediaPlayerAlert;
-    MediaPlayer meadiaPlayerMonitor;
+    // Monitor sound voice at start of app
+    MediaPlayer mediaPlayerMonitor;
+    // Speeding alert Sound
     MediaPlayer mediaPlayerSpeedAlert;
 
+
+
+    public  String timeStampToFormattedTime(long timestamp){
+
+        Date timeD = new Date((long) (timestamp * 1000));
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        String time = sdf.format(timeD);
+        return  time;
+    }
+
+
+//RESULT this code convert 1633304782 to 05:46:33
 
 
     @Override
@@ -51,39 +86,50 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
         }
 
         speedText = findViewById(R.id.speedText);
+
+        if (getSupportActionBar() != null) {;
+            getSupportActionBar().hide();
+        }
+
+        // setting initial values to  0 for all variables //
+
         currentSpeed = 0;
         prevSpeed =0;
         speedMaxStamp= 0;
         speedMinStamp =0;
+        time =0;
+        latitude =0;
+        longitude =0;
+        altitude =0;
+        bearingAccuracy =0;
+        realtimeUncertainty =0;
+
+
+        // views initializations //
+
         speedKmText = findViewById(R.id.speedKmText);
         crashImage = findViewById(R.id.crashImage);
         crashText = findViewById(R.id.crashText);
+        speedText = findViewById(R.id.speedText);
+        timeText = findViewById(R.id.timeMeasure);
+        latLongText = findViewById(R.id.locationText);
+        altitudeText = findViewById(R.id.altitudeText);
         baMeasureText = findViewById(R.id.baMeasure);
+        realtimeUncertainText = findViewById(R.id.ruMeasure);
+
+
+        // Setting initial TextViews  //
+
         speedText.setText("0.0m/s");
         speedKmText.setText("0.0km/h");
 
-
-//        int color=speedText.getCurrentTextColor();
-//        String hexColor = String.format("#%06X", (0xFFFFFF & color));
-//        if(hexColor.equals("#FFFFFF")){
-//            Toast.makeText(getApplicationContext(), "color is : " + hexColor, Toast.LENGTH_LONG).show();
-//        }
-//        int color=speedText.getCurrentTextColor();
-//        String hexColor = String.format("#%06X", (0xFFFFFF & color));
-//
-//        if (hexColor.equals("#FFFFFF")) {
-//            Toast.makeText(getApplicationContext(), "color is : " + hexColor, Toast.LENGTH_LONG).show();
-//            speedText.setTextColor(Color.parseColor("#FF0000"));
-//        } else {
-//            Toast.makeText(getApplicationContext(), "color is : " + hexColor, Toast.LENGTH_LONG).show();
-//            speedText.setTextColor(Color.parseColor("#FFFFFF"));
-//        }
+        // initializing media sounds  //
 
         mediaPlayerAlert = MediaPlayer.create(getApplicationContext(), R.raw.alert);
-        meadiaPlayerMonitor = MediaPlayer.create(getApplicationContext(), R.raw.start);
+        mediaPlayerMonitor = MediaPlayer.create(getApplicationContext(), R.raw.start);
         mediaPlayerSpeedAlert = MediaPlayer.create(getApplicationContext(),R.raw.speed);
 
-        meadiaPlayerMonitor.start();
+        mediaPlayerMonitor.start();
 
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -106,29 +152,48 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
 
     }
 
+
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        double speed = 0;
+
 
         Log.i("speed","Current Speed : [location null] 0.0m/s");
 
 
         if(location == null){
+
             Log.i("speed","Current Speed : [location null] 0.0m/s");
             speedText.setText("0.0m/s");
             speedKmText.setText("0.0km/h");
+
+
         }else{
+
             float mCurrentSpeed = location.getSpeed();
             prevSpeed = currentSpeed;
             currentSpeed =mCurrentSpeed;
             double kmSpeed = (mCurrentSpeed*3.6);
-            speed  = mCurrentSpeed;
 
+            time = location.getTime();
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+            altitude = location.getAltitude();
+            bearingAccuracy = location.getBearing();
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                realtimeUncertainty = location.getElapsedRealtimeUncertaintyNanos();
+            }
 
             Log.i("speed","Current Speed : [location] " + mCurrentSpeed+ "m/s");
-            speedText.setText(mCurrentSpeed+"m/s");
 
+            // setting text view values on location change
+            timeText.setText(timeStampToFormattedTime(time));
+            speedText.setText(mCurrentSpeed+"m/s");
             speedKmText.setText(kmSpeed+"km/h");
+            latLongText.setText("Lat: " + latitude +" Long: "+longitude);
+            altitudeText.setText(Double.toString(altitude) + 'm');
+            baMeasureText.setText(Double.toString(bearingAccuracy));
+            realtimeUncertainText.setText(Double.toString(realtimeUncertainty));
 
             // play sound on over speeding
             if(currentSpeed > 1){
