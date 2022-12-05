@@ -123,30 +123,13 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
         speedText.setText("0.0m/s");
         speedKmText.setText("0.0km/h");
 
-
-//        int color=speedText.getCurrentTextColor();
-//        String hexColor = String.format("#%06X", (0xFFFFFF & color));
-//        if(hexColor.equals("#FFFFFF")){
-//            Toast.makeText(getApplicationContext(), "color is : " + hexColor, Toast.LENGTH_LONG).show();
-//        }
-//        int color=speedText.getCurrentTextColor();
-//        String hexColor = String.format("#%06X", (0xFFFFFF & color));
-//
-//        if (hexColor.equals("#FFFFFF")) {
-//            Toast.makeText(getApplicationContext(), "color is : " + hexColor, Toast.LENGTH_LONG).show();
-//            speedText.setTextColor(Color.parseColor("#FF0000"));
-//        } else {
-//            Toast.makeText(getApplicationContext(), "color is : " + hexColor, Toast.LENGTH_LONG).show();
-//            speedText.setTextColor(Color.parseColor("#FFFFFF"));
-//        }
-
         // initializing media sounds  //
 
         mediaPlayerAlert = MediaPlayer.create(getApplicationContext(), R.raw.alert);
-        meadiaPlayerMonitor = MediaPlayer.create(getApplicationContext(), R.raw.start);
+        mediaPlayerMonitor = MediaPlayer.create(getApplicationContext(), R.raw.start);
         mediaPlayerSpeedAlert = MediaPlayer.create(getApplicationContext(),R.raw.speed);
 
-        meadiaPlayerMonitor.start();
+        mediaPlayerMonitor.start();
 
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -218,10 +201,10 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
                 String hexColor = String.format("#%06X", (0xFFFFFF & color));
 
                 if (hexColor.equals("#FFFFFF")) {
-                    Toast.makeText(getApplicationContext(), "color is : " + hexColor, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(), "color is : " + hexColor, Toast.LENGTH_LONG).show();
                     speedText.setTextColor(Color.parseColor("#FF0000"));
                 } else {
-                    Toast.makeText(getApplicationContext(), "color is : " + hexColor, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(), "color is : " + hexColor, Toast.LENGTH_LONG).show();
                     speedText.setTextColor(Color.parseColor("#FFFFFF"));
                 }
 
