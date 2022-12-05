@@ -45,6 +45,11 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_dashboard);
+
+        if (getSupportActionBar() != null) {;
+            getSupportActionBar().hide();
+        }
+
         speedText = findViewById(R.id.speedText);
         currentSpeed = 0;
         prevSpeed =0;
