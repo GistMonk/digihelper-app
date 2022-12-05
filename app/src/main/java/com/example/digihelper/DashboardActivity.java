@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -21,10 +22,15 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
     TextView speedText ;
     TextView speedKmText;
     TextView crashText;
+    TextView baMeasureText;
     ImageView crashImage;
 
     double currentSpeed ;
     double prevSpeed;
+    double speedMinStamp;
+    double speedMaxStamp;
+    double timeDiff;
+
 
     MediaPlayer mediaPlayerAlert;
     MediaPlayer meadiaPlayerMonitor;
@@ -41,9 +47,12 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
         speedText = findViewById(R.id.speedText);
         currentSpeed = 0;
         prevSpeed =0;
+        speedMaxStamp= 0;
+        speedMinStamp =0;
         speedKmText = findViewById(R.id.speedKmText);
         crashImage = findViewById(R.id.crashImage);
         crashText = findViewById(R.id.crashText);
+        baMeasureText = findViewById(R.id.baMeasure);
         speedText.setText("0.0m/s");
         speedKmText.setText("0.0km/h");
 
@@ -68,7 +77,7 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
         }
                 Log.i("permission","You  have permission of location");
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0, this);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 
 
 
@@ -77,6 +86,7 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
     @Override
     public void onLocationChanged(@NonNull Location location) {
         double speed = 0;
+
         Log.i("speed","Current Speed : [location null] 0.0m/s");
 
 
@@ -90,28 +100,44 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
             float mCurrentSpeed = location.getSpeed();
             prevSpeed = currentSpeed;
             currentSpeed =mCurrentSpeed;
-
+            double kmSpeed = (mCurrentSpeed*3.6);
             speed  = mCurrentSpeed;
 
 
             Log.i("speed","Current Speed : [location] " + mCurrentSpeed+ "m/s");
             speedText.setText(mCurrentSpeed+"m/s");
 
-            float kmCurrentSpeed = (float) (mCurrentSpeed*3.6);
-            speedKmText.setText((int) kmCurrentSpeed);
+            speedKmText.setText(kmSpeed+"km/h");
 
             // play sound on over speeding
             if(currentSpeed > 1){
                 mediaPlayerSpeedAlert.start();
             }
 
+            if(currentSpeed == 0){
+                speedMinStamp = location.getTime();
+                timeDiff = Math.abs(speedMaxStamp - speedMinStamp);
+            }
 
-            if(currentSpeed == 0.0 && prevSpeed > 1){
+            if(currentSpeed > 1){
+                speedMaxStamp = location.getTime();
+            }
+
+            if(currentSpeed == prevSpeed && currentSpeed == 0){
+
+                baMeasureText.setText("Diff : " + 0);
+
+
+            }
+
+            baMeasureText.setText("Diff : " + timeDiff);
+
+            if(timeDiff !=0 &&  timeDiff < 5001 ) {
                 crashText.setText("Crash Detected");
                 crashImage.setBackground(getDrawable(R.drawable.cragradient));
                 mediaPlayerAlert.start();
-
             }
+
 
         }
 
