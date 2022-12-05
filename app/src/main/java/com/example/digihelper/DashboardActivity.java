@@ -7,6 +7,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -84,6 +85,12 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
             getSupportActionBar().hide();
         }
 
+        speedText = findViewById(R.id.speedText);
+
+        if (getSupportActionBar() != null) {;
+            getSupportActionBar().hide();
+        }
+
         // setting initial values to  0 for all variables //
 
         currentSpeed = 0;
@@ -116,15 +123,30 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
         speedText.setText("0.0m/s");
         speedKmText.setText("0.0km/h");
 
+
+//        int color=speedText.getCurrentTextColor();
+//        String hexColor = String.format("#%06X", (0xFFFFFF & color));
+//        if(hexColor.equals("#FFFFFF")){
+//            Toast.makeText(getApplicationContext(), "color is : " + hexColor, Toast.LENGTH_LONG).show();
+//        }
+//        int color=speedText.getCurrentTextColor();
+//        String hexColor = String.format("#%06X", (0xFFFFFF & color));
+//
+//        if (hexColor.equals("#FFFFFF")) {
+//            Toast.makeText(getApplicationContext(), "color is : " + hexColor, Toast.LENGTH_LONG).show();
+//            speedText.setTextColor(Color.parseColor("#FF0000"));
+//        } else {
+//            Toast.makeText(getApplicationContext(), "color is : " + hexColor, Toast.LENGTH_LONG).show();
+//            speedText.setTextColor(Color.parseColor("#FFFFFF"));
+//        }
+
         // initializing media sounds  //
 
         mediaPlayerAlert = MediaPlayer.create(getApplicationContext(), R.raw.alert);
-        mediaPlayerMonitor = MediaPlayer.create(getApplicationContext(), R.raw.start);
+        meadiaPlayerMonitor = MediaPlayer.create(getApplicationContext(), R.raw.start);
         mediaPlayerSpeedAlert = MediaPlayer.create(getApplicationContext(),R.raw.speed);
 
-
-        // play monitoring starting sound at start of application
-        mediaPlayerMonitor.start();
+        meadiaPlayerMonitor.start();
 
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -147,10 +169,10 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
 
     }
 
-    @SuppressLint("SetTextI18n")
+
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        double speed = 0;
+
 
         Log.i("speed","Current Speed : [location null] 0.0m/s");
 
@@ -168,6 +190,7 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
             prevSpeed = currentSpeed;
             currentSpeed =mCurrentSpeed;
             double kmSpeed = (mCurrentSpeed*3.6);
+
             time = location.getTime();
             latitude = location.getLatitude();
             longitude = location.getLongitude();
@@ -177,7 +200,6 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 realtimeUncertainty = location.getElapsedRealtimeUncertaintyNanos();
             }
-
 
             Log.i("speed","Current Speed : [location] " + mCurrentSpeed+ "m/s");
 
@@ -192,6 +214,17 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
 
             // play sound on over speeding
             if(currentSpeed > 1){
+                int color=speedText.getCurrentTextColor();
+                String hexColor = String.format("#%06X", (0xFFFFFF & color));
+
+                if (hexColor.equals("#FFFFFF")) {
+                    Toast.makeText(getApplicationContext(), "color is : " + hexColor, Toast.LENGTH_LONG).show();
+                    speedText.setTextColor(Color.parseColor("#FF0000"));
+                } else {
+                    Toast.makeText(getApplicationContext(), "color is : " + hexColor, Toast.LENGTH_LONG).show();
+                    speedText.setTextColor(Color.parseColor("#FFFFFF"));
+                }
+
                 mediaPlayerSpeedAlert.start();
             }
 
