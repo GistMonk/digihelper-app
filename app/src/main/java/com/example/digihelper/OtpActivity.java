@@ -49,7 +49,7 @@ public class OtpActivity extends AppCompatActivity {
             verifyBtn.setVisibility(view.INVISIBLE);
             otpProgressBar.setVisibility(view.VISIBLE);
 
-            if(otpTextString.equals("291102")){
+            if(otpTextString.equals("123")){
                 i = new Intent(getApplicationContext(), RegistrationActivity.class);
                 startActivity(i);
 
