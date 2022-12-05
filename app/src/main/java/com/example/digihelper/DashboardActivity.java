@@ -18,6 +18,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -65,7 +66,7 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
     public  String timeStampToFormattedTime(long timestamp){
 
         Date timeD = new Date((long) (timestamp * 1000));
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         String time = sdf.format(timeD);
         return  time;
     }
@@ -74,6 +75,7 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
 //RESULT this code convert 1633304782 to 05:46:33
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -131,6 +133,8 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
 
         mediaPlayerMonitor.start();
 
+
+
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -153,6 +157,7 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
     }
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onLocationChanged(@NonNull Location location) {
 
@@ -187,10 +192,13 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
             Log.i("speed","Current Speed : [location] " + mCurrentSpeed+ "m/s");
 
             // setting text view values on location change
+
+            DecimalFormat df = new DecimalFormat("#.##");
+
             timeText.setText(timeStampToFormattedTime(time));
-            speedText.setText(mCurrentSpeed+"m/s");
-            speedKmText.setText(kmSpeed+"km/h");
-            latLongText.setText("Lat: " + latitude +" Long: "+longitude);
+            speedText.setText(df.format(currentSpeed)+"m/s");
+            speedKmText.setText(df.format(kmSpeed)+"km/h");
+            latLongText.setText( df.format(latitude) +"/"+ df.format(longitude));
             altitudeText.setText(Double.toString(altitude) + 'm');
             baMeasureText.setText(Double.toString(bearingAccuracy));
             realtimeUncertainText.setText(Double.toString(realtimeUncertainty));
