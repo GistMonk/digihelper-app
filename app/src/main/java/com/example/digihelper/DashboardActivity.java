@@ -80,6 +80,9 @@ public class DashboardActivity extends AppCompatActivity implements LocationList
 
         setContentView(R.layout.activity_dashboard);
 
+        if (getSupportActionBar() != null) {;
+            getSupportActionBar().hide();
+        }
 
         // setting initial values to  0 for all variables //
 
